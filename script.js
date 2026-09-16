@@ -1,0 +1,9 @@
+const services=[['▥','Registo de Empresa','Constituição de empresas de todos os tipos.'],['▦','Contabilidade','Organização e gestão financeira da sua empresa.'],['▤','Contratos de Trabalho','Elaboração e gestão de contratos.'],['♢','Direito','Apoio em trâmites legais e fiscais.'],['⌕','Auditoria','Mais transparência e segurança.'],['♧','Formação e Orientação','Suporte contínuo para o seu crescimento.']];
+const grid=document.querySelector('#serviceGrid');
+if(grid) grid.innerHTML=services.map(([icon,title,text])=>`<div class="col-md-6 col-xl-4"><article class="service-card reveal"><i>${icon}</i><h3>${title}</h3><p>${text}</p><a href="#contacto" aria-label="Saber mais sobre ${title}">→</a></article></div>`).join('');
+const observer=new IntersectionObserver((entries)=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+document.querySelectorAll('a[href^="#"]').forEach(link=>link.addEventListener('click',()=>{const menu=document.querySelector('.navbar-collapse.show');if(menu) bootstrap.Collapse.getOrCreateInstance(menu).hide()}));
+const form=document.querySelector('#contactForm');
+form?.addEventListener('submit',event=>{event.preventDefault();const status=document.querySelector('#formStatus');if(!form.checkValidity()){form.classList.add('was-validated');status.textContent='Preencha os campos obrigatórios.';return}status.textContent='Mensagem preparada. Entraremos em contacto consigo.';form.reset();form.classList.remove('was-validated')});
+document.querySelector('#newsletterForm')?.addEventListener('submit',event=>{event.preventDefault();const button=event.currentTarget.querySelector('button');button.textContent='✓';event.currentTarget.reset()});
